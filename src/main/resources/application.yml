@@ -1,0 +1,64 @@
+server:
+  tomcat:
+    uri-encoding: UTF-8
+    threads:
+      max: 200
+      min-spare: 30
+    connection-timeout: 5000ms
+  port: 8080
+  servlet:
+    context-path: /emos-wx-api
+
+
+spring:
+  datasource:
+    type: com.alibaba.druid.pool.DruidDataSource
+    druid:
+      driver-class-name: com.mysql.jdbc.Driver
+      url: jdbc:mysql://222.223.239.147:3306/emos?useUnicode=true&characterEncoding=UTF-8&serverTimezone=Asia/Shanghai
+      username: root
+      password: Xinboway@803
+      initial-size: 8
+      max-active: 16
+      min-idle: 8
+      max-wait: 60000
+      test-while-idle: true
+      test-on-borrow: false
+      test-on-return: false
+  redis:
+    database: 0
+    host: 222.223.239.147
+    port: 6379
+    password: Xinboway@803
+    jedis:
+      pool:
+        max-active: 1000
+        max-wait: -1ms
+        max-idle: 16
+        min-idle: 8
+  data:
+    mongodb:
+      host: 222.223.239.147
+      port: 27017
+      database: emos
+      authentication-database: admin
+      username: admin
+      password: Xinboway@803
+
+mybatis:
+  mapper-locations: classpath*:mapper/*.xml
+  type-aliases-package: com.example.emos.wx.db.pojo
+  configuration:
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+#    输出日志的实现方案，打印出mybatis执行的各种SQL语句
+    map-underscore-to-camel-case: true # 支持驼峰命名法
+
+logging:
+  level:
+    root: info
+    com.example.emos.wx.db.dao : warn # 警告级别
+  pattern:
+    console: "%d{HH:mm:ss}  %-5level  %msg%n"
+    # %-5level 输出日志级别，-5表示左对齐并且固定输出5个字符，如果不足在右边补0
+    # %msg 日志文本
+    # %n 换行
