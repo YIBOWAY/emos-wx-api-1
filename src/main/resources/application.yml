@@ -62,3 +62,12 @@ logging:
     # %-5level 输出日志级别，-5表示左对齐并且固定输出5个字符，如果不足在右边补0
     # %msg 日志文本
     # %n 换行
+
+emos:
+  jwt:
+    #密钥
+    secret: YIBOWAY
+    #令牌过期时间（天）
+    expire: 5
+    #令牌缓存时间（天数）
+    cache-expire: 10
