@@ -47,6 +47,6 @@ public class OAuth2Realm extends AuthorizingRealm {
         //TODO 从令牌中获取userId，然后检测该账户是否被冻结
         SimpleAuthenticationInfo info = new SimpleAuthenticationInfo();
         //TODO 往info对象中添加用户信息，Token字符串
-        return null;
+        return info;
     }
 }
