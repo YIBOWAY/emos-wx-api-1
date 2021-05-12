@@ -40,7 +40,7 @@ public class UserServiceImpl implements UserService {
         map.put("js_code", code);
         map.put("grant_type", "authorization_code");
         String response = HttpUtil.post(url,map);
-        JSONObject json = JSONUtil.parseObj(response);
+        JSONObject json = JSONUtil.parseObj(response);//转换成json格式类型
         String openId = json.getStr("openid");
         if (openId == null || openId.length() == 0){
             throw new RuntimeException("临时登录凭证错误");

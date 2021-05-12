@@ -25,7 +25,7 @@ import java.io.IOException;
 import java.util.concurrent.TimeUnit;
 
 /**
- * 描述:  过滤器
+ * 描述:  过滤器，在springMVC框架中注册的过滤器
  * 拦截下所有的请求，判断是否交给shiro框架处理
  * 如果OAuth2Filter是单例的，那么多个线程使用OAuth2Filter的时候，用的ThreadLocalToken就是同一个对象，所以会有线程安全问题。
  */
@@ -89,9 +89,13 @@ public class OAuth2Filter extends AuthenticatingFilter {
                 redisTemplate.delete(token);
                 int userId = jwtUtil.getUserId(token);
                 token = jwtUtil.createToken(userId);
+                //把新令牌保存到Redis中
                 redisTemplate.opsForValue().set(token,userId+"",cacheExpire, TimeUnit.DAYS);
+                //把新令牌绑定到线程
+                threadLocalToken.setToken(token);
             }
             else {
+                //如果Redis中不存在令牌，让用户重新登录
                 resp.setStatus(HttpStatus.SC_UNAUTHORIZED);
                 resp.getWriter().print("令牌已过期");
                 return false;
@@ -131,7 +135,9 @@ public class OAuth2Filter extends AuthenticatingFilter {
     }
 
     private String getRequestToken(HttpServletRequest request){
+//        从header中获取token
         String token = request.getHeader("token");
+//        如果header中不存在token，则从参数中获取token
         if (StrUtil.isBlank(token)){
             token = request.getParameter("token");
         }

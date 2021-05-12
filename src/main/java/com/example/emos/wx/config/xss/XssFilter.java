@@ -6,7 +6,7 @@ import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
 
 /**
- * 描述:  XSS过滤器
+ * 描述:  XSS过滤器，原生的servlet过滤器
  */
 @WebFilter(urlPatterns = "/*")
 public class XssFilter implements Filter {
