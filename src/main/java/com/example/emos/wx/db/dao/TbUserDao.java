@@ -15,4 +15,6 @@ public interface TbUserDao {
     public Integer searchIdByOpenId(String openId);//一些相关查询要利用主键来进行，主键作为数据库的索引，速度更快
 
     public Set<String> searchUserPermissions(int userId);
+
+    public TbUser searchById(int userId);
 }
